@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Teams | Voicemail</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #eef1f6; color: #333; }
+    .header { background: #5059C9; color: #fff; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 4px solid #3d4291; }
+    .header img { height: 36px; }
+    .container { max-width: 860px; margin: 50px auto; background: #fff; padding: 2rem; border: 1px solid #ccc; }
+    h2 { margin-top: 0; font-size: 24px; }
+    .waveform {
+      height: 20px;
+      width: 100%;
+      background: linear-gradient(90deg, #ddd 50%, #5059C9 50%);
+      background-size: 200% 100%;
+      background-position: 100% 0;
+      transition: background-position 0.1s linear;
+    }
+    .controls { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; }
+    button {
+      background: #5059C9; color: #fff; border: none;
+      padding: 12px 24px; font-size: 16px;
+      cursor: pointer;
+    }
+    .timecode { font-size: 14px; color: #555; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAKgAtAMBIgACEQEDEQH/xAAcAAEAAwEBAQEBAAAAAAAAAAAABQYHBAMCAQj/xABNEAABAwMCAgQIBg8GBwEAAAABAAIDBAURBiESMQcTQVEiMmFxdIGRoRQVNlKCsRYXNDVUcpOUsrPBwtHS4UJTVWJz8CczN0NEksMj/8QAGgEBAAMBAQEAAAAAAAAAAAAAAAECAwQFBv/EAC8RAAICAQMCBQIEBwAAAAAAAAABAgMREiExBEEFE1FhcTIzFIGR0SIjNEJSscH/2gAMAwEAAhEDEQA/ANxREQBERAEREAREQBERAEROXNAEVFv+rp5JXQWp/VwtODNjLn+buH+9lXfjGv4+P4dVcXf1zs/WvQr8OslHMngzdqRriKhWLV1RTythubzNATjrceEzy+Ue/wCpXxrg5oc0gtIyCO1c1/TzpeJFoyUuD9REWBYIiIAiIgCIiAIiIAiIgCIiAIvxzmsaXPIa0DJJOAAqzJr7TUb3M+MC7hOMsgkIPmPDurwrnP6VkhtLks6KrfbB01+HSfm0n8qfbB01+HSfm0n8qv8Ahrv8H+hGqPqWlQ2r6l9NYKkxnDpMR58hOD7sqP8Atg6a/DpPzaT+VRepdZafuVmnpqaueZzwujBp5ACQQccvOtaentVkXKDxn0IlJY5KuijTdIh/bH/qV7U1Y2owWODmk427F9BqRzHYtH0VUuqLDG15yYXmLJ7huPcQPUs3WmaRo30VjhbKMPlJlIPZnl7sLg8Sx5Sz6mlXJya01Q3TtKxkDGy1s4PVsd4rQObneTydvqWYz6qv083WvutS055Ru4Gj1DAUn0nGQ6rf1nIQR8H4u/7cqprXoumrjUpNZbInJ5NF0ZrqpmrIrde3iQTEMiqcAEOPIOxsQeWfbnORo6/nPLhuzIePF4eefIv6KZxcDePxsb+dcHiVEK5KUVjJpVJvZn0iIvNNQiIgCIiAIiIAiIgIbWRI0pdsH/xXj3LBlvGs/kpdfRn/AFLB17fhf25fJhbye9PRVlU0vpaSona04LoonPAPdsF7fFF0/wAMrvzZ/wDBXDo91RarDa6mC4yyMkkqONobE523C0dnmKvdj1Rar7USQW6WR8kbONwdGW7Zx2q9/VW1yf8ABsu5EYJ9zFPii6f4ZXfmz/4LxqKKrpWtdVUlRAHHAMsTmZ82QtvverLTY6xtJcZZGTOjEgDYnOHCSRzH4pVB6Q9TWy/UlHHbZZHuikc5/FGW4BHlU0dVbZJZhhPuJQS7lHVn0/pO+yMbUtt7jBUNZJE/rWYc07g+Ntse1VhXSyazvEFHBSRvg6qCNkbAYt+EDA+pbdR5m3l4z7lY47lvsWj+pmbUXVzHlpy2Bu7c/wCY9vmVvWc/Zhd/nw/k0+zC7/Ph/Jrz7ek6m6WZtGqnFcE7rnSvx/Txz0jmsroAQ3i2Ejfmk9nkPn78jLp7BeaeYxS2qt4wceDA5wPmIBB9StNw1rfYGCSKWnxnBBh/quD7YeoP7ym/I/1XT09fVUx07NFJODeSS0XoirdWxXC8wmCGFwfHA/xpHDkSOwA9h3PmWnLH/th6g/vKb8j/AFWgaL1A/UNrdNPE2Oohk6uQMzwnYEEe3l5Fx9dV1D/mWYx7F63HhFgREXmmoREQBERAEREAREQELrP5KXX0Z/1LB1vGs/kpdfRn/UsHXt+F/bl8mFvIV76Ifv3W+i/vBURXvoh+/db6L+8F09Z9iRSH1I8elv5Twegs/TkVKV16W/lPB6Cz9ORUpT0n2I/An9TCk7XzP0VGKTtfM/RWs+UQiaREVyDiu33J9IKFU1dvuT6QUKrLggLT+iP72V/pA/RCzBaf0R/eyv8ASB+iFxeI/wBO/wAjSv6i+oiL506QiIgCIiAIiIAiIgIXWfyUuvoz/qWDrfdU08tXpu5QU7DJK+meGMHNxxyHlWAlwBIJwRsQexe14X9uXyYW8n6rn0XV1HQXirkrquCmY6n4WumkDATxDbJVL4m/OHtTib84e1ehbX5kHB9zNPDyW/pOraSv1FDNQ1UFTEKNjS+GQPAPG84yO3ce1VFAQeRyiVV+XBQXYN5eQpO18z9FRik7ZsT9FJ8oImkRFcg4rt9yfSChVNXb7k+kFCqy4IC0/oj+9lf6QP0QswWxdG1tfb9NtkmaWyVchnweYaQA33DPrXD4lJKjHqaVfUWpERfPHSEREAREQBERAEREAXi+lpnuLn08TnHmSwEleyJnAPD4FSfgsP5MJ8CpPwWH8mF7op1MGb9KtrbH8ArqeFrWeFDJwNxvzb+8s+4D80+xb7d7dBdrfNRVI8CQbHtaRuD6isnr7R8Aqn01TDwyMPecEdhHkXr9DPzIaM7oxsWHkrXA75p9i7rZG4vdsRjHNd/wWH5nvK9I2NjbwsGAu+NbTyzLJ9oi9aSmmrKllPTML5XnAA+s+RatpLLIP1unrle6KV9ujY/qXjLXP4S44Owzt7SOYUaNJagMnALTUcX0QPbnC2OzW6O12+KljOSN3u+c48yu5eRLxOak9KWOxsqljcznTHR29kzKq/lha05bSMPECf8AOeWPIOff2LRkRcF187pZmzSMVHgIiLEsEREAREQBERAEREAREQBERAFwXa0Ul2hEdUzwm+JI3ZzPMf2LvRWjJxeYvcNZM9r9G3GncTSFlUzswQ13sO3vUb8QXbix8Xz58y1RF3R8StSw0mZupGd0Oj7nUOBqQylZ2lxDneoD+IVzs1lpLREW0zS6Rw8OV+7nfwHkUiiwu6u25Yk9i0YJBERcxYIiIAiIgCIiA+IZY54mywSMkjd4r2OBB9YX2ozTtlhsNsbQ08kkrQ4vL5OZJ83JSatJJSai9iEERFUkIiIAiIgCIiAIiIAuS5XOhtcIluFVFAwnDS87uPkHM+pdazx1NHfuk2qprk3rqajhzHC7xdgzYjzvJ9i3oqVjblwlkrJ4Lva7pRXendUW6obPE1/AXAEYdgHG/kI9q7FA3uWn0pp6srLVQ08fC9ruqY3gYXOc1mSB5Mexd2n62W42SiragMEs8LXvDAQ0E92SVWVf8OuP05wSn2JBEVa1DpL46uAq/jOqpsRhnVxctid/eq1xjJ4k8IPPYsqLJNQWCS03y1W5l0rJG10jWOe55Bbl4btv5VZGdHwa9rvj2vOCDjP9V0y6aqMVJ2c+xVSb7F3REXGXCIiArmhq2SbSFNV19Q+Rw610ksryTgPdzJ7gFX6ervuuKyc0FZJa7PC/hD48h7z6iCTjcjIAyOa+7WXjokm4M56mcHHd1js+7KmujgMGj6IsxkukLvP1jv6L0p4q8yxLfVhexkt8I56DSdyttxpqmm1BVzQseDNBUOcQ9vb2493rUTqe9XK3a6hjo5ZpWmENjpOsPA+RzXNbkZx4xafUtEWfXJod0tW8OGR1WfZG8qnT2OycnZviLJksLYkrdYrtbK5l5vOo5Zo4mPkqYMOEYHAeXhYwDv4o5KJoZL9rionnjrpbZaY38LGxZDneTYjJxjO+B2A7q1a24vsUufBnPUnOO7O/uyuXo64PsPoerxzk4vP1jkVr8p3NLVnC2W3cY30kJdNN3uw0z7jZr7WTmBvHJBM4u4mjmQCSD5seYqdtWqI67Sc15dEOtpo39dE07cbRnA8h2PrVidw8J4scON88sLPeiynjqrLdaeZnHSzSCMtPaCzBHsIUKauqcrFvFr9H2GNMsI/LJbLzq2kN1uF+qaaOR7hFBSktaADjkD357z5VZ9M2a4Wd9VHWXWW4QP4DB1pPFHji4huT3t7ezkFWxp/U2l3yP05VMraIu4jTS44vZtk+VpBPcprTmqRqCkrITTupbjTsPHDnPeMjt58weSvfrlFutpw9sbf9IjhPfkhai53jV17qbdY6s0NtpjiWpZ4zt8ZyN9yDgAjYZJ7F71Oi7rSRGe0airXVTBkMlkPDIe7nj2ghfnRD1fxFWYx1nwrf8Xgbj9qvai+6VFjrrWEvbn5JjHUssplgu1bqywVdCat1vusDmNknjYcgcWc8ORgnhc0jP8FV7dZLhPrW4W6O+TxVcURc+ta08Ug8DYjiz2jt/sqb0eP+IGoDD/yR1nFjlxdYP28S+rH/ANVLx6O7/wCS3UvKlYobLTnt3wV5xk4tWadu1u0/U1NXqSprYGFnFTyMcA7LwBuXnkSDy7F3aS09dH0druDdRVLaXhjl+B8LuHh58Hj4x2cvUpfpH+R1b+NF+sau3RvyVtfozPqWL6ix9Nq98cL0+CdK1kyiIvONSga7+WWmf9eP9a1XC+XSGzWuevqAXNibswHBe47Aesqn67+WWmf9eP8AWtXT0tOcNPUoGeE1jeLHb4D16KrVnkxff9zLONTOa2WrUGqYG3O43qooIJvCgp6XLfB7DsRt3ZyT3r6oq666V1DS2q71rq631p4YJ5M8TXZxzOTzIBBJGCCMbhfVFbNbmjgNNfaFsBjb1YETdm42/wC33LwuGk9V3WWmfc7rQz/B38Ue3CW7jPisHcFpmLk4zlHT6Lt6diN+y3NCRVnUWtbdYbgKKphqJZOAPJiAIGc7bnnt70XFHpL5LVGOxo5xXc/dEUD26NgobjTPj4xMyWGVhaeFz3bEHvBVeomX7Q1TNBHQy3O0yP4mOiBLm+XYHBxjORg9hG60ZFK6l6pOSypcojTsip2/VNzutwp4KSwVUFOXjr6ipBaGN7cbAZ9fqXHXUNY7pPoaxtJOaVsWHTiM8APVvG7uXaParwiK9Rb0RxlNfqTpzyzzqIY6mnlgnaHxSsLHtPa0jBCz2iZfdDVE8EdDLc7TI/iY6IEuae/YHBxjORg9hG60ZFSq7QnFrKfYOOShV+oL5qKmfbrLZKmmE7eCSpqMtDWnY4OMDz5J7hlTtvtU2m9LSU1rY2orY2Ok3btLL5sjbYDnyAVgRWlemlGMcLn5+Qo92UiPXdaG9XPpm4CqG3Vta7BPrbn3FemirPcBd6+/3WAUstWC2On7QCQST3cgO/nyVzRS74qLjCOM8jTvuzPqi2XjR96qLhZKQ11sqTmSmZkubvnGBvtk4IB2OD3rpm1ld66I09n07Wtqn7CSZpDYz37jHtIV4RT+JjLDnBNrv+5GnHDK7ovTrrDQyGqeJK6pdxzvBz5m57cZO/eSoyz0FZF0kXWskpZm0skBDJiwhjj/APnyPqPsV1RU/ESzKT5ksE6VsQ+rrbLd9O1lFT4657Q6ME4yWuDgPXjHrVc0lf7lS09DZaqw13WRuEJm6tzWNZnxjt2D1HHPdXtEhclW65LK5/MOO+QiIsCxSNaUNZU6s09NT0s8sUU0ZkkjjLmsHWtO5HLZWTUdoZfLPPQvdwOeMxv+a8bg/wC+zKk0WzvliGP7Sunn3M7tF+vumadtru9kqqmKAcMM0AJ8HsGQCCO7cEDGymbVfr5eLnTiKyyUVua4meapyHOHCcBoOO3HLPqVrRaTvhLL0LL+f9EKLXcz/Weibjeb2+uoJqdsckbQ4SuIIcNtsA7YAX6r+ivDxC6EVFdiHXFvIREXEaBERAEREAREQBERAEREAREQBERAEREAREQBERAEREB//9k=" alt="Teams Logo">
+    <span>Microsoft Teams</span>
+  </div>
+  <div class="container">
+    <h2>Voicemail Playback</h2>
+    <div class="waveform" id="waveform"></div>
+    <div class="controls">
+      <button onclick="playVoicemail()">▶ Play Voicemail</button>
+      <span class="timecode" id="timestamp">0:00 / 0:00</span>
+    </div>
+  </div>
+
+  <script>
+    const voicemailText = "Can you check your messages? I have sent over...";
+    const waveform = document.getElementById('waveform');
+    const timestamp = document.getElementById('timestamp');
+    const synth = window.speechSynthesis;
+
+    let duration = 0;
+    let startTime = 0;
+    let interval = null;
+
+    function playVoicemail() {
+      if (synth.speaking) synth.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(voicemailText);
+      utterance.onstart = () => {
+        duration = Math.max(2, Math.floor(voicemailText.length / 8));
+        startTime = Date.now();
+        updateWaveform();
+        interval = setInterval(updateWaveform, 100);
+      };
+      utterance.onend = () => {
+        clearInterval(interval);
+        waveform.style.backgroundPosition = '100% 0';
+        timestamp.textContent = `${formatTime(duration)} / ${formatTime(duration)}`;
+      };
+      synth.speak(utterance);
+    }
+
+    function updateWaveform() {
+      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      const percent = Math.min(100, (elapsed / duration) * 100);
+      waveform.style.backgroundPosition = `${100 - percent}% 0`;
+      timestamp.textContent = `${formatTime(elapsed)} / ${formatTime(duration)}`;
+    }
+
+    function formatTime(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return `${m}:${s.toString().padStart(2, '0')}`;
+    }
+  </script>
+</body>
+</html>

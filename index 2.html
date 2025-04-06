@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Teams | Voicemail</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #eef1f6; color: #333; }
+    .header { background: #5059C9; color: #fff; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 4px solid #3d4291; }
+    .header img { height: 36px; }
+    .container { max-width: 860px; margin: 50px auto; background: #fff; padding: 2rem; border: 1px solid #ccc; }
+    h2 { margin-top: 0; font-size: 24px; }
+    .waveform {
+      height: 20px;
+      width: 100%;
+      background: linear-gradient(90deg, #ddd 50%, #5059C9 50%);
+      background-size: 200% 100%;
+      background-position: 100% 0;
+      transition: background-position 0.1s linear;
+    }
+    .controls { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; }
+    button {
+      background: #5059C9; color: #fff; border: none;
+      padding: 12px 24px; font-size: 16px;
+      cursor: pointer;
+    }
+    .timecode { font-size: 14px; color: #555; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Microsoft_Teams_2022.svg" alt="Teams Logo">
+    <span>Microsoft Teams</span>
+  </div>
+  <div class="container">
+    <h2>Voicemail Playback</h2>
+    <div class="waveform" id="waveform"></div>
+    <div class="controls">
+      <button onclick="playVoicemail()">▶ Play Voicemail</button>
+      <span class="timecode" id="timestamp">0:00 / 0:00</span>
+    </div>
+  </div>
+
+  <script>
+    const voicemailText = "Can you check your messages? I have sent over...";
+    const waveform = document.getElementById('waveform');
+    const timestamp = document.getElementById('timestamp');
+    const synth = window.speechSynthesis;
+
+    let duration = 0;
+    let startTime = 0;
+    let interval = null;
+
+    function playVoicemail() {
+      if (synth.speaking) synth.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(voicemailText);
+      utterance.onstart = () => {
+        duration = Math.max(2, Math.floor(voicemailText.length / 8));
+        startTime = Date.now();
+        updateWaveform();
+        interval = setInterval(updateWaveform, 100);
+      };
+      utterance.onend = () => {
+        clearInterval(interval);
+        waveform.style.backgroundPosition = '100% 0';
+        timestamp.textContent = `${formatTime(duration)} / ${formatTime(duration)}`;
+      };
+      synth.speak(utterance);
+    }
+
+    function updateWaveform() {
+      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      const percent = Math.min(100, (elapsed / duration) * 100);
+      waveform.style.backgroundPosition = `${100 - percent}% 0`;
+      timestamp.textContent = `${formatTime(elapsed)} / ${formatTime(duration)}`;
+    }
+
+    function formatTime(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return `${m}:${s.toString().padStart(2, '0')}`;
+    }
+  </script>
+</body>
+</html>
